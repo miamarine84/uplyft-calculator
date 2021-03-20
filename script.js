@@ -32,7 +32,7 @@ let loanCalculator = (startLoan, loanAmount, InstallmentAmount, interestRate) =>
     if (installmentInterval == "daily") {
         daily();
     } else if (installmentInterval == "weekly") {
-        weekly(startLoan, loanAmount, dailyInterest);
+        weekly(startLoan, loanAmount, dailyInterest, InstallmentAmount);
     } else if (installmentInterval == "monthly") {
         monthly(loanAmount, dailyInterest);
     } else {
@@ -55,27 +55,53 @@ let loanCalculator = (startLoan, loanAmount, InstallmentAmount, interestRate) =>
 
 }
 
-let weekly = (startLoan, loanAmount, dailyInterest) => {
-    console.log(startLoan)
-    var dt = new Date(startLoan);
-    console.log(dt.getDay());
-    console.log(dt.getDate());
-    console.log(dt.getDate() + 23);
-    // Weekend Checker
-    if (dt.getDay() == 6 || dt.getDay() == 5) {
+let weekly = (startLoan, loanAmount, dailyInterest, InstallmentAmount) => {
 
-        console.log( "weekend");
+    let customerBalance = parseInt(loanAmount);
+
+    startLoan = new Date(startLoan);
+    // let loanDate = startLoan.setDate(startLoan.getDate() + 6);
+    // console.log(new Date(loanDate));
+    // var dt = Date.parse(startLoan);
+    // console.log(dt);
+
+
+    // console.log(dt.getDate() + 23);
+    // Weekend Checker
+    if (startLoan.getDay() == 6 || startLoan.getDay() == 5) {
+
+        console.log("weekend");
     } else {
-        console.log( "not weekend");
+        console.log("not weekend");
     }
 
-    // if (loanAmount > 0) {
-    //     console.log(currentDay);
-    //     for (let i = 0; i < 3; i++) {
-    //         console.log(currentDay)
-    //     }
-    //}
- 
+    let finalWeeksPay = (daysTillPayOff)=>{
+        startLoan.setDate(startLoan.getDate() +  daysTillPayOff);
+        console.log(startLoan, daysTillPayOff)
+        console.log(balanceSchedule.length)
+        for(let i = 7; i < balanceSchedule.length; i += 7){
+            console.log('this many weeks')
+          
+            console.log(balanceSchedule[i])
+        }
+        // Need to create a while loop here instead to capture how many weeks and days will get as well as weeks 
+        console.log(balanceSchedule[balanceSchedule.length-2])
+    }
+
+    let daysTillPayOff = 1;
+    let balanceSchedule =[];
+    for (let i = 0; 0 < customerBalance; i++) {
+        if (loanAmount > 0) {
+            customerBalance += dailyInterest - InstallmentAmount;
+            daysTillPayOff += 1;
+            balanceSchedule.push(parseFloat(customerBalance).toFixed(2))         
+        }
+       
+
+  
+    }
+    console.log(balanceSchedule)
+    finalWeeksPay(daysTillPayOff)
 
 }
 
