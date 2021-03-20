@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Uplyft Calculator</title>
+</head>
+
+<body>
+    <!-- Just an image -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://uplyftcapital.com/wp-content/uploads/2019/01/cropped-Uplyft_Icon_Purple_01-01.png"
+                    alt="Uplyft capital" width="30" height="24">
+                Uplyft Capital Calculator
+            </a>
+        </div>
+    </nav>
+    </br>
+    <div class="container">
+        <form id="form-tag" action="">
+            <!-- Start Date -->
+            <div class="mb-3 col-md-6">
+                <label for="exampleInputEmail1" class="form-label">Please input a start date</label>
+                <input type="date" class="form-control" id="start-date" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <!-- Loan Amount -->
+            <div class=" mb-3 col-md-6">
+                <h5 for="" class="form-label">Loan Amount</h5>
+                <input placeholder="Enter dollar amount" type="number" min="1" step="1" class="form-control"
+                    aria-label="Dollar amount (with dot and two decimal places)" id="loan-amount">
+            </div>
+            <!-- Installment Interval -->
+            <div class="mb-3 col-md-6" role="group" aria-label="Basic outlined example" id="installmentButton">
+                <label class="form-label">Installment Interval</label>
+                </br>
+
+                <button type="button" value="daily" class="btn btn-outline-primary">Daily</button>
+                <button type="button" value="weekly" class="btn btn-outline-primary">Weekly</button>
+                <button type="button" value="monthly" class="btn btn-outline-primary">Monthly</button>
+            </div>
+            <!-- Installment Amount -->
+            <div class="mb-3 col-md-6">
+                <h5 for="" class="form-label">Installment Amount</h5>
+                <input type="number" min="1" step="1" class="form-control"
+                    aria-label="Dollar amount (with dot and two decimal places)" id="installment-amount">
+            </div>
+            <!-- Simple Interest Rate -->
+            <div class="mb-3 col-md-6">
+                <h5 for="" class="form-label">Interest Rate</h5>
+                <input type="number" min=".1" step="0.1" class="form-control"
+                    aria-label="Dollar amount (with dot and two decimal places)">
+            </div>
+            <!-- Submit Button -->
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+ 
+        <script src="script.js"></script>
+</body>
+
+</html>
