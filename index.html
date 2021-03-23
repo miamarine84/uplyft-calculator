@@ -27,54 +27,59 @@
     </nav>
     </br>
     <div class="container">
-        <form id="form-tag" action="">
-            <!-- Start Date -->
-            <div class="mb-3 col-md-6">
-                <label for="loanStartDate" class="form-label">Please input a start date</label>
-                <input type="date"  class="form-control" id="start-date" aria-describedby="set loan start date">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <!-- Loan Amount -->
-            <div class=" mb-3 col-md-6">
-                <h5 for="" class="form-label">Loan Amount</h5>
-                <input placeholder="Enter dollar amount" type="number" min="1" step="1" class="form-control"
-                    aria-label="Dollar amount (with dot and two decimal places)" id="loan-amount">
-            </div>
-            <!-- Installment Interval -->
-            <div class="mb-3 col-md-6" role="group" aria-label="Installment Interval" id="installmentButton">
-                <label class="form-label">Installment Interval</label>
-                </br>
+        <div class="row">
+            <div class="col">
+                <form id="form-tag"  action="">
+                    <!-- Start Date -->
+                    <div class="mb-3">
+                        <label for="loanStartDate" class="form-label">Please input a start date</label>
+                        <input type="date" class="form-control" id="start-date" aria-describedby="set loan start date">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <!-- Loan Amount -->
+                    <div class=" mb-3">
+                        <h5 for="" class="form-label">Loan Amount</h5>
+                        <input placeholder="Enter dollar amount" type="number" min="1" step="1" class="form-control"
+                            aria-label="Dollar amount (with dot and two decimal places)" id="loan-amount">
+                    </div>
+                    <!-- Installment Interval -->
+                    <div class="mb-3" role="group" aria-label="Installment Interval" id="installmentButton">
+                        <label class="form-label">Installment Interval</label>
+                        </br>
 
-                <button type="button" value="daily" class="btn btn-outline-primary">Daily</button>
-                <button type="button" value="weekly" class="btn btn-outline-primary">Weekly</button>
-                <button type="button" value="monthly" class="btn btn-outline-primary">Monthly</button>
-            </div>
-            <!-- Installment Amount -->
-            <div class="mb-3 col-md-6">
-                <h5 for="" class="form-label">Installment Amount</h5>
-                <input type="number" min="1" step="1" class="form-control"
-                    aria-label="Dollar amount (with dot and two decimal places)" id="installment-amount">
-            </div>
-            <!-- Simple Interest Rate -->
-            <div class="mb-3 col-md-6">
-                <h5 for="" class="form-label">Interest Rate</h5>
-                <input type="number" min=".1" step="0.01" max="40" class="form-control"
-                    aria-label="Simple Interest Rate"
-                    id="interest-rate">
-            </div>
-            <!-- Submit Button -->
-            <div class="col-md-6">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" value="daily" class="btn btn-outline-primary">Daily</button>
+                        <button type="button" value="weekly" class="btn btn-outline-primary">Weekly</button>
+                        <button type="button" value="monthly" class="btn btn-outline-primary">Monthly</button>
+                    </div>
+                    <!-- Installment Amount -->
+                    <div class="mb-3">
+                        <h5 for="" class="form-label">Installment Amount</h5>
+                        <input type="number" min="1" step="1" class="form-control"
+                            aria-label="Dollar amount (with dot and two decimal places)" id="installment-amount">
+                    </div>
+                    <!-- Simple Interest Rate -->
+                    <div class="mb-3">
+                        <h5 for="" class="form-label">Interest Rate</h5>
+                        <input type="number" min=".1" step="0.01" max="40" class="form-control"
+                            aria-label="Simple Interest Rate" id="interest-rate">
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary">Submit</button>
 
+                    </div>
+                </form>
             </div>
-        </form>
+            <div class="col-lg"> 
+                <h4 id="final-payment"></h4>
+                <table id="amortization-table" class="row">
+        
+                </table>
+            </div>
+        </div>
+
     </div>
-    <div >
-        <h4 id="final-payment"></h4>
-        <table id="amortization-table" >
-            
-        </table>
-    </div>
+  
 
 
     <!-- Optional JavaScript -->
@@ -88,10 +93,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
-        <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

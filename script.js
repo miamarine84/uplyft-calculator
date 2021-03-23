@@ -46,10 +46,18 @@ let daily = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
     let balanceSchedule = [customerBalance];
     let dailyInterest;
     for (let i = 0; 0 < customerBalance; i++) {
-        dailyInterest = customerBalance * (interestRate / 365);
+        dailyInterest = customerBalance * ((interestRate / 100).toFixed(2) / 365);
         daysTillPayOff += 1;
         customerBalance += dailyInterest - InstallmentAmount;
+        // customerBalance.toFixed(2)
+        console.log(customerBalance)
         balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
+        if (InstallmentAmount < dailyInterest) {
+            $("#final-payment").empty();
+            $("#final-payment").append(`<h4> Invalid Entry your installment payment will be less then your monthly interest.</h4>`);
+            $("#amortization-table").empty();
+            return;
+        }
     }
 
     let finalDailyPay = (daysTillPayOff) => {
@@ -85,13 +93,18 @@ let weekly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
 
     let daysTillPayOff = 1;
     let balanceSchedule = [customerBalance];
-    let dailyInterest;
+    let weeklyInterest;
     for (let i = 0; 0 < customerBalance; i++) {
-        dailyInterest = customerBalance * (interestRate / 365);
-        daysTillPayOff += 1;
-        if (i % 7 == 0) {
-            customerBalance += dailyInterest - InstallmentAmount;
-            balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
+        weeklyInterest = 7 * customerBalance * ((interestRate / 100).toFixed(2) / 365);
+        daysTillPayOff += 7;
+        customerBalance += weeklyInterest - InstallmentAmount;
+        balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
+        console.log(weeklyInterest, InstallmentAmount)
+        if (InstallmentAmount < weeklyInterest) {
+            $("#final-payment").empty();
+            $("#final-payment").append(`<h4> Invalid Entry your installment payment will be less then your monthly interest.</h4>`);
+            $("#amortization-table").empty();
+            return 0;
         }
     }
 
@@ -107,8 +120,10 @@ let weekly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
             schedule.push(balanceSchedule[i]);
         }
         payOffDate.setDate(payOffDate.getDate() + daysTillPayOff);
+        
         let lastPaymentAmount = balanceSchedule[balanceSchedule.length - 2];
         // console.log(`On ${payOffDate} all you will have left to pay is ${balanceSchedule[balanceSchedule.length - 2]}`);
+        console.log(dates, schedule)
         weekendHolidayChecker(payOffDate, lastPaymentAmount)
         amortizationAppender(dates, schedule);
     }
@@ -127,13 +142,19 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
     let daysTillPayOff = 1;
 
     let balanceSchedule = [customerBalance];
-    let dailyInterest;
+    let monthlyInterest;
     for (let i = 0; 0 < customerBalance; i++) {
-        dailyInterest = customerBalance * (interestRate / 365);
-        daysTillPayOff += 1;
-        if (i % 30 == 0) {
-            customerBalance += dailyInterest - InstallmentAmount;
-            balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
+        monthlyInterest = 30 * (customerBalance * ((interestRate / 100).toFixed(2) / 365));
+        console.log(monthlyInterest)
+        daysTillPayOff += 30;
+        customerBalance += monthlyInterest - InstallmentAmount;
+        balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
+        console.log(monthlyInterest, customerBalance)
+        if (InstallmentAmount < monthlyInterest) {
+            $("#final-payment").empty();
+            $("#final-payment").append(`<h4> Invalid Entry your installment payment will be less then your monthly interest.</h4>`);
+            $("#amortization-table").empty();
+            return 0;
         }
     }
 
@@ -142,14 +163,15 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
 
         let dates = [];
         let schedule = [];
-        for (let i = 0; i < balanceSchedule.length - 2; i++) {
+        for (let i = 0; i < balanceSchedule.length - 1; i++) {
             startLoan.setDate(startLoan.getDate() + 30);
             dates.push(startLoan.setDate(startLoan.getDate()));
             schedule.push(balanceSchedule[i]);
-     
+
         }
         payOffDate.setDate(payOffDate.getDate() + daysTillPayOff);
         let lastPaymentAmount = balanceSchedule[balanceSchedule.length - 2];
+        console.log(balanceSchedule)
         // console.log(`On ${payOffDate} all you will have left to pay is ${balanceSchedule[balanceSchedule.length - 2]}`);
         weekendHolidayChecker(payOffDate, lastPaymentAmount)
         amortizationAppender(dates, schedule);
@@ -162,43 +184,49 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
 }
 
 
-
+let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
-  
 
-  
+
+
     if (payOffDate.getDay() == 6 || payOffDate.getDay() == 0) {
         payOffDate.setDate(payOffDate.getDate() + 1)
         console.log('passing this')
         return weekendHolidayChecker(payOffDate, lastPaymentAmount)
-        
+
     } else {
         let holidayComparer
         console.log(payOffDate, "Made IT!!");
-        if(payOffDate.getMonth() < 10){
+        if (payOffDate.getMonth() < 10) {
             holidayComparer = `${payOffDate.getFullYear()}-0${payOffDate.getMonth() + 1}-0${payOffDate.getDate()}`
-        }else{
-         holidayComparer = `${payOffDate.getFullYear()}-${payOffDate.getMonth() + 1}-${payOffDate.getDate()}`
+        } else {
+            holidayComparer = `${payOffDate.getFullYear()}-${payOffDate.getMonth() + 1}-${payOffDate.getDate()}`
         }
         console.log(holidayComparer)
         axios.get(`https://calendarific.com/api/v2/holidays?&api_key=22fcccfee538966ec4663c5ae13ed473318871cb&country=US&year=${payOffDate.getFullYear()}&type=national`).then(result => {
-            for(let i = 0; i < result.data.response.holidays.length; i++){
-            if(holidayComparer == result.data.response.holidays[i].date.iso){
-                payOffDate.setDate(payOffDate.getDate() + 1)
-                weekendHolidayChecker(payOffDate, lastPaymentAmount);
-                console.log('Skipped a Holiday')
-            }
+            for (let i = 0; i < result.data.response.holidays.length; i++) {
+                if (holidayComparer == result.data.response.holidays[i].date.iso) {
+                    payOffDate.setDate(payOffDate.getDate() + 1)
+                    weekendHolidayChecker(payOffDate, lastPaymentAmount);
+                    console.log('Skipped a Holiday');
+
+                }
             }
         }).catch(error => {
             console.log(error)
         })
+        $("#final-payment").empty();
+        $("#final-payment").append(`Your last payment will be on ${weekdayArray[payOffDate.getDay()]} ${monthArray[payOffDate.getMonth()]}, ${payOffDate.getDate()} ${payOffDate.getFullYear()} for ${lastPaymentAmount}`)
         console.log(payOffDate, lastPaymentAmount)
-        $("#final-payment").append(`${payOffDate} and ${lastPaymentAmount}`)
-    } 
+        console.log(payOffDate.getDate())
+    }
 }
 
 let amortizationAppender = (dates, schedule) => {
+    $("#amortization-table").empty();
+
     console.log(dates, schedule)
     let days = [];
     let weekday = [];
@@ -211,9 +239,8 @@ let amortizationAppender = (dates, schedule) => {
         month.push(days[i].getMonth())
         year.push(days[i].getFullYear())
     }
-    let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    for (let i = 0; i < days.length; i++) {
-        $("#amortization-table").append(`<tr><td>  On ${weekdayArray[weekday[i]]} </td><td> ${monthArray[month[i]]} </td><td> ${days[i].getDate()}   </td><td> ${year[i]} Your balance will be: ${schedule[i]}`)
+
+    for (let i = 1; i < days.length; i++) {
+        $("#amortization-table").append(`<tr><td>  On ${weekdayArray[weekday[i]]} </td><td> ${monthArray[month[i]]} </td><td> ${days[i].getDate()}   </td><br><td> ${year[i]} Your balance will be: ${schedule[i]}`)
     }
 }
