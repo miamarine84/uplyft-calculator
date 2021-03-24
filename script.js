@@ -125,9 +125,9 @@ let weekly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
         startLoan.setDate(startLoan.getDate() + 1); // Quick Fix check on it more
         for (let i = 0; i < balanceSchedule.length - 2; i++) {
             startLoan.setDate(startLoan.getDate() + 7);
-            console.log(startLoan)
+
             dates.push(startLoan.setDate(startLoan.getDate()));
-            console.log(dates, startLoan)
+
             schedule.push(balanceSchedule[i]);
         }
         payOffDate.setDate(payOffDate.getDate() + daysTillPayOff);
@@ -155,11 +155,9 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
     //Setting the variables that will go on our ammortizationAppender
     for (let i = 0; 0 < customerBalance; i++) {
         monthlyInterest = 30 * (customerBalance * ((interestRate / 100).toFixed(2) / 365));
-        console.log(monthlyInterest)
         daysTillPayOff += 31;
         customerBalance += monthlyInterest - InstallmentAmount;
         balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
-        console.log(monthlyInterest, customerBalance)
         if (InstallmentAmount < monthlyInterest) {
             $("#final-payment").empty();
             $("#final-payment").append(`<h4> Invalid Entry your installment payment will be less then your monthly interest.</h4>`);
