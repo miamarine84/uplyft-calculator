@@ -266,10 +266,9 @@ let amortizationAppender = (dates, schedule) => {
     // Appending Amortizaiton Table with the Date object and our arrays we created on lines 192 and 193
     for (let i = 1; i < days.length; i++) {
         $("#amortization-table").append(`<tr>
-        <td>  On ${weekdayArray[weekday[i]]}  </td>
-        <td> ${monthArray[month[i]]}  </td>
-        <td> ${days[i].getDate()},    </td>
-        <td> ${year[i]} Your balance will be: $${schedule[i]}`)
+        <td >  On ${weekdayArray[weekday[i]]}  </td>
+        <td > ${monthArray[month[i]]} ${days[i].getDate()}, ${year[i]}  </td>
+        <td > Your balance will be: $${schedule[i]}`)
     }
 
 }
