@@ -23,7 +23,7 @@ $("#installmentButton button").click(function (e) {
     thisBtn.addClass("active").siblings().removeClass("active");
     installmentInterval = thisBtn.val();
     e.preventDefault();
-    startFuction();
+   
 });
 
 
@@ -71,6 +71,7 @@ let daily = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
 
         let dates = [];
         let schedule = [];
+        startLoan.setDate(startLoan.getDate() + 1) // Quick Fix check on it more
         for (let i = 0; i < balanceSchedule.length - 2; i++) {
             startLoan.setDate(startLoan.getDate() + 1);
             dates.push(startLoan.setDate(startLoan.getDate()));
@@ -107,7 +108,6 @@ let weekly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
         daysTillPayOff += 7;
         customerBalance += weeklyInterest - InstallmentAmount;
         balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
-        console.log(weeklyInterest, InstallmentAmount)
         if (InstallmentAmount < weeklyInterest) {
             $("#final-payment").empty();
             $("#final-payment").append(`<h4> Invalid Entry your installment payment will be less then your monthly interest.</h4>`);
@@ -122,9 +122,12 @@ let weekly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
 
         let dates = [];
         let schedule = [];
+        startLoan.setDate(startLoan.getDate() + 1); // Quick Fix check on it more
         for (let i = 0; i < balanceSchedule.length - 2; i++) {
             startLoan.setDate(startLoan.getDate() + 7);
+            console.log(startLoan)
             dates.push(startLoan.setDate(startLoan.getDate()));
+            console.log(dates, startLoan)
             schedule.push(balanceSchedule[i]);
         }
         payOffDate.setDate(payOffDate.getDate() + daysTillPayOff);
@@ -153,7 +156,7 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
     for (let i = 0; 0 < customerBalance; i++) {
         monthlyInterest = 30 * (customerBalance * ((interestRate / 100).toFixed(2) / 365));
         console.log(monthlyInterest)
-        daysTillPayOff += 30;
+        daysTillPayOff += 31;
         customerBalance += monthlyInterest - InstallmentAmount;
         balanceSchedule.push(parseFloat(customerBalance).toFixed(2));
         console.log(monthlyInterest, customerBalance)
@@ -171,7 +174,7 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
         let dates = [];
         let schedule = [];
         for (let i = 0; i < balanceSchedule.length - 1; i++) {
-            startLoan.setDate(startLoan.getDate() + 30);
+            startLoan.setDate(startLoan.getDate() + 31);
             dates.push(startLoan.setDate(startLoan.getDate()));
             schedule.push(balanceSchedule[i]);
 
@@ -197,9 +200,10 @@ let monthArray = ["January", "February", "March", "April", "May", "June", "July"
 let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
     //Validation    
     if (payOffDate == "Invalid Date") {
-        alert("Please try again ");
+        alert("Please try again line 204");
         $("#final-payment").empty();
         $("#amortization-table").empty();
+        return;
     }
     //Checking to see if payOffDate is a weekend date or not 
     if (payOffDate.getDay() == 6 || payOffDate.getDay() == 0) {
@@ -231,18 +235,26 @@ let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
         })
         $("#final-payment").empty();
         // Appending our needed final payment to display to the user
-        $("#final-payment").append(`Your last payment will be on ${weekdayArray[payOffDate.getDay()]} ${monthArray[payOffDate.getMonth()]}, ${payOffDate.getDate()} ${payOffDate.getFullYear()} for ${lastPaymentAmount}`)
+        $("#final-payment").append(`Your last payment will be on: <br>${weekdayArray[payOffDate.getDay()]} ${monthArray[payOffDate.getMonth()]}, ${payOffDate.getDate()} ${payOffDate.getFullYear()} for $${lastPaymentAmount}`)
         if (lastPaymentAmount == undefined) {
             $("#final-payment").empty();
-            alert("Please try again ");
+            alert("Please try again");
+            return;
         }
 
     }
 }
 
 let amortizationAppender = (dates, schedule) => {
+        // Validation of all inputs
+      
     $("#amortization-table").empty();
-
+    if (isNaN(dates[0])) {
+        alert("Please try again");
+        $("#final-payment").empty();
+        $("#amortization-table").empty();
+        return;
+    }
     // Initializing our arrays that will get pushed data with proper date for example March 6,2021
     let days = [];
     let weekday = [];
@@ -255,20 +267,18 @@ let amortizationAppender = (dates, schedule) => {
         month.push(days[i].getMonth())
         year.push(days[i].getFullYear())
     }
-    // Validation of all inputs 
-  
-    if (days[1] == 'Invalid Date') {
-        alert("Please try again ");
-        $("#final-payment").empty();
-        $("#amortization-table").empty();
-        return 0;
-    };
+ 
+
+   
     // Appending Amortizaiton Table with the Date object and our arrays we created on lines 192 and 193
-    for (let i = 1; i < days.length; i++) {
+    for (let i = 0; i < days.length; i++) {
         $("#amortization-table").append(`<tr>
+        
         <td >  On ${weekdayArray[weekday[i]]}  </td>
         <td > ${monthArray[month[i]]} ${days[i].getDate()}, ${year[i]}  </td>
-        <td > Your balance will be: $${schedule[i]}`)
+        <td > Your balance will be: $${schedule[i]} </tr>`)
     }
 
 }
+
+startFuction();

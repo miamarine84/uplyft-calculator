@@ -18,7 +18,7 @@
     <!-- Just an image -->
     <nav class="navbar navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="https://uplyftcapital.com/">
                 <img src="https://uplyftcapital.com/wp-content/uploads/2019/01/cropped-Uplyft_Icon_Purple_01-01.png"
                     alt="Uplyft capital" width="30" height="24">
                 Uplyft Capital Calculator
@@ -32,13 +32,13 @@
                 <form id="form-tag"  action="">
                     <!-- Start Date -->
                     <div class="mb-3">
-                        <label for="loanStartDate" class="form-label"><h5>Please input a start date</h5></label>
+                        <label for="loanStartDate" class="form-label"><h5>Please input a start date:</h5></label>
                         <input type="date" class="form-control" id="start-date" aria-describedby="set loan start date">
                     </div>
                     <!-- Loan Amount -->
                     <div class=" mb-3">
-                        <h5 for="" class="form-label">Loan Amount</h5>
-                        <input placeholder="Enter dollar amount" type="number" min="1" step="1" class="form-control"
+                        <h5 for="" class="form-label">Loan Amount:</h5>
+                        <input placeholder="Enter loan amount" type="number" min="1" step="1" class="form-control"
                             aria-label="Dollar amount (with dot and two decimal places)" id="loan-amount">
                     </div>
                     <!-- Installment Interval -->
@@ -46,31 +46,32 @@
                         <label class="form-label"><h5>Installment Interval</h5></label>
                         </br>
 
-                        <button type="button" value="daily" class="btn btn-outline-primary">Daily</button>
-                        <button type="button" value="weekly" class="btn btn-outline-primary">Weekly</button>
-                        <button type="button" value="monthly" class="btn btn-outline-primary">Monthly</button>
+                        <button type="button" value="daily" class="btn btn-success">Daily</button>
+                        <button type="button" value="weekly" class="btn btn-success">Weekly</button>
+                        <button type="button" value="monthly" class="btn btn-success">Monthly</button>
                     </div>
                     <!-- Installment Amount -->
                     <div class="mb-3">
-                        <h5 for="" class="form-label">Installment Amount</h5>
+                        <h5 for="" class="form-label">Installment Amount:</h5>
                         <input type="number" min="1" step="1" class="form-control"
-                            aria-label="Dollar amount (with dot and two decimal places)" id="installment-amount">
+                            aria-label="Dollar amount (with dot and two decimal places)" placeholder="Payment for each Installment" id="installment-amount">
                     </div>
                     <!-- Simple Interest Rate -->
                     <div class="mb-3">
-                        <h5 for="" class="form-label">Interest Rate</h5>
+                        <h5 for="" class="form-label">Interest Rate:</h5>
                         <input type="number" min=".1" step="0.01" max="40" class="form-control"
-                            aria-label="Simple Interest Rate" id="interest-rate">
+                            aria-label="Simple Interest Rate" id="interest-rate" placeholder="Interest Rate %">
                     </div>
                     <!-- Submit Button -->
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="d-grid col-10 mx-auto">
+                        <button type="submit" class="btn btn-info">Get loan details</button>
 
                     </div>
                 </form>
+                <h4 id="final-payment"></h4>
             </div>
             <div class="col-lg col-md-6"> 
-                <h4 id="final-payment"></h4>
+             
                 <table id="amortization-table" class="row">
         
                 </table>
