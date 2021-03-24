@@ -180,7 +180,7 @@ let monthly = (startLoan, loanAmount, InstallmentAmount, interestRate) => {
         payOffDate.setDate(payOffDate.getDate() + daysTillPayOff);
         let lastPaymentAmount = balanceSchedule[balanceSchedule.length - 2];
 
-        // console.log(`On ${payOffDate} all you will have left to pay is ${balanceSchedule[balanceSchedule.length - 2]}`);
+
         weekendHolidayChecker(payOffDate, lastPaymentAmount)
         amortizationAppender(dates, schedule);
 
