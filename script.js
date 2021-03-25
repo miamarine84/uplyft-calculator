@@ -23,7 +23,7 @@ $("#installmentButton button").click(function (e) {
     thisBtn.addClass("active").siblings().removeClass("active");
     installmentInterval = thisBtn.val();
     e.preventDefault();
-   
+
 });
 
 
@@ -206,12 +206,12 @@ let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
     //Checking to see if payOffDate is a weekend date or not 
     if (payOffDate.getDay() == 6 || payOffDate.getDay() == 0) {
         payOffDate.setDate(payOffDate.getDate() + 1)
-        console.log('passing this holiday!')
+        console.log('passing this weekend!')
         return weekendHolidayChecker(payOffDate, lastPaymentAmount)
 
     } else {
         let holidayComparer
-        console.log(payOffDate, "Made IT through all the holidays!!!");
+        console.log(payOffDate, "Made IT through all the weekend!!!");
         $("body").addClass("background-changer");
         if (payOffDate.getMonth() < 10) {
             holidayComparer = `${payOffDate.getFullYear()}-0${payOffDate.getMonth() + 1}-0${payOffDate.getDate()}`
@@ -219,11 +219,12 @@ let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
             holidayComparer = `${payOffDate.getFullYear()}-${payOffDate.getMonth() + 1}-${payOffDate.getDate()}`
         }
         // Comparing holidays of the year to our lastPaymentAmount on line 221 if true we make this in to a recursive function to check weekend and holidays again more documentation in https://calendarific.com/api-documentation
-        axios.get(`https://calendarific.com/api/v2/holidays?&api_key=22fcccfee538966ec4663c5ae13ed473318871cb&country=US&year=${payOffDate.getFullYear()}&type=national`).then(result => {
+        axios.get(`https://calendarific.com/api/v2/holidays?&api_key=45aee06a4ce31ccbb9ec0b95882f03a67addf6ee&country=US&year=${payOffDate.getFullYear()}&type=national`).then(result => {
             for (let i = 0; i < result.data.response.holidays.length; i++) {
                 if (holidayComparer == result.data.response.holidays[i].date.iso) {
                     payOffDate.setDate(payOffDate.getDate() + 1)
                     weekendHolidayChecker(payOffDate, lastPaymentAmount);
+                    console.log(lastPaymentAmount)
                     console.log('Skipped a Holiday');
 
                 }
@@ -244,8 +245,9 @@ let weekendHolidayChecker = (payOffDate, lastPaymentAmount) => {
 }
 
 let amortizationAppender = (dates, schedule) => {
-        // Validation of all inputs
-      
+    // Validation of all inputs
+
+
     $("#amortization-table").empty();
     if (isNaN(dates[0])) {
         alert("Please try again");
@@ -265,18 +267,97 @@ let amortizationAppender = (dates, schedule) => {
         month.push(days[i].getMonth())
         year.push(days[i].getFullYear())
     }
- 
 
-   
+
+
     // Appending Amortizaiton Table with the Date object and our arrays we created on lines 192 and 193
     for (let i = 0; i < days.length; i++) {
-        $("#amortization-table").append(`<tr>
-        
-        <td >  On ${weekdayArray[weekday[i]]}  </td>
-        <td > ${monthArray[month[i]]} ${days[i].getDate()}, ${year[i]}  </td>
-        <td > Your balance will be: $${schedule[i]} </tr>`)
+
+        console.log(i)
+        //           let holidayComparer = `${days[i].getFullYear()}-${days[i].getMonth() + 1}-${days[i].getDate()}`;
+
+        //     if (days[i].getMonth() < 10) {
+        //         holidayComparer = `${days[i].getFullYear()}-0${days[i].getMonth() + 1}-${days[i].getDate()}`
+        //     } else {
+        //         holidayComparer = `${days[i].getFullYear()}-${days[i].getMonth() + 1}-${days[i].getDate()}`
+        //     }
+        // const promise1 = new Promise((resolve, reject) => {
+        //     axios.get(`https://calendarific.com/api/v2/holidays?&api_key=45aee06a4ce31ccbb9ec0b95882f03a67addf6ee&country=US&year=${days[i].getFullYear()}&type=national`).then(result => {
+        //         console.log('here')
+        //         for (let x = 0; x < result.data.response.holidays.length; x++) {
+        //             if (holidayComparer == result.data.response.holidays[x].date.iso) {
+        //                 console.log(result.data.response.holidays[x].date.iso)
+        //                 console.log(holidayComparer)
+        //                 console.log(i)
+        //                 resolve(true)
+        //                 console.log('did this')
+        //                 i++
+
+        //                 console.log(i)
+
+        //             }
+        //         }
+        //     }).catch(error => {
+        //         console.log(error)
+        //     })
+        // })
+
+        // promise1.then((value) => {
+        //     console.log(value)
+        // });
+
+        if (days[i].getDay() == 0 || days[i].getDay() == 6) {
+            console.log('skipping payment on weekends')
+
+        }
+        else {
+
+
+            //     const promise1 = new Promise((resolve, reject) => {
+            //     axios.get(`https://calendarific.com/api/v2/holidays?&api_key=45aee06a4ce31ccbb9ec0b95882f03a67addf6ee&country=US&year=${days[i].getFullYear()}&type=national`).then(result => {
+            //         console.log('here')
+            //         for (let x = 0; x < result.data.response.holidays.length; x++) {
+            //             if (holidayComparer == result.data.response.holidays[x].date.iso) {
+            //                 console.log(result.data.response.holidays[x].date.iso)
+            //                 console.log(holidayComparer)
+            //                 console.log(i)
+            //                 resolve(true)
+            //                 console.log('did this')
+            //                 i++
+
+            //                 console.log(i)
+
+            //             }
+            //         }
+            //     }).catch(error => {
+            //         console.log(error)
+            //     })
+            // })
+            console.log(weekdayArray[weekday[i]])
+            $("#amortization-table").append(`<tr>
+            <td >  On ${weekdayArray[weekday[i]]}  </td>
+            <td > ${monthArray[month[i]]} ${days[i].getDate()}, ${year[i]}  </td>
+            <td > Your balance will be: $${schedule[i]} </tr>`)
+            // expected output: "Success!"
+
+
+
+
+        }
     }
+
 
 }
 
+
+//     let holidayComparer = `${payOffDate.getFullYear()}-${payOffDate.getMonth() + 1}-${payOffDate.getDate()}`;
+//     axios.get(`https://calendarific.com/api/v2/holidays?&api_key=22fcccfee538966ec4663c5ae13ed473318871cb&country=US&year=${days[i].getFullYear()}&type=national`).then(result => {
+//     for (let i = 0; i < result.data.response.holidays.length; i++) {
+//         if (holidayComparer == result.data.response.holidays[i].date.iso) {
+//             console.log('Skipped a Holiday');
+//         }
+//     }
+// }).catch(error => {
+//     console.log(error)
+// })
 startFuction();
